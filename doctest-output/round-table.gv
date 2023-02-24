@@ -1,0 +1,32 @@
+digraph {
+	1
+	2
+	4
+	5
+	7
+	8
+	9
+	10 [shape=doublecircle]
+	11
+	12
+	14
+	15
+	17
+	18
+	1 -> 2 [label=a constraint=false]
+	4 -> 5 [label=b constraint=false]
+	7 -> 1 [label="ε" constraint=false]
+	7 -> 4 [label="ε" constraint=false]
+	2 -> 8 [label="ε" constraint=false]
+	5 -> 8 [label="ε" constraint=false]
+	9 -> 5 [label="ε" constraint=false]
+	9 -> 10 [label="ε" constraint=false]
+	8 -> 5 [label="ε" constraint=false]
+	8 -> 10 [label="ε" constraint=false]
+	11 -> 12 [label=a constraint=false]
+	10 -> 11 [label="ε" constraint=false]
+	14 -> 15 [label=b constraint=false]
+	11 -> 14 [label="ε" constraint=false]
+	17 -> 18 [label=b constraint=false]
+	14 -> 17 [label="ε" constraint=false]
+}
