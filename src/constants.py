@@ -1,1 +1,3 @@
 regExOperators = ['|', '?', '+', '*', '^']
+
+regExOperatorConstans = {'OR': '|'}
