@@ -29,8 +29,29 @@ class Automaton:
     self.states = states
     self.transitions = transitions
   
+  def copyAutomaton(self, startIndex=0):
+    iterator = startIndex
+    stateMapping = {}
+    newStates = []
+    newTransitions = []
+
+    for state in self.states:
+      newState = State(iterator)
+      stateMapping[f"{state.label}"] = newState
+      newStates.append(newState)
+      iterator += 1
+
+    for transition in self.transitions:
+      newTrans = Transition(stateMapping[transition.startNode.label], stateMapping[transition.endNode.label], transition.value)
+      newTransitions.append(newTrans)
+    
+    # Return automaton copy and new iterator
+    return Automaton(self.expression, self.alphabeat, stateMapping[self.initialState.label], stateMapping[self.acceptanceState.label], newStates, newTransitions), iterator
+  
   def show(self):
     dot = graphviz.Digraph(comment=self.expression)
+    dot.attr(label=self.expression, rankdir='LR', ranksep='1', nodesep='1')
+    dot.engine='dot'
 
     for node in self.states:
       if node == self.acceptanceState:
@@ -39,9 +60,10 @@ class Automaton:
         dot.node(node.label, shape='circle')
 
     for trans in self.transitions:
-      dot.edge(trans.startNode.label, trans.endNode.label, constraint='false', label=trans.value)
+      dot.edge(trans.startNode.label, trans.endNode.label, label=trans.value)
 
+    # Add initial state shape
     dot.node('', shape='point')
     dot.edge('', self.initialState.label, constraint='false')
 
-    dot.render(directory='doctest-output', view=True)
+    dot.render(directory='nfa_output', view=True)

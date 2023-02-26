@@ -120,7 +120,37 @@ def AFN_from_RegEx(regexPostFix):
       stack.append(automaton)
 
     elif c == '+':
-      pass
+      # loop on previous with 1 char guraranteed
+      a = stack.pop()
+      aCopy, newIter = a.copyAutomaton(counter)
+
+      counter = newIter
+
+      start = a.initialState
+      end = a.acceptanceState
+
+      preStart = aCopy.initialState
+      preEnd = aCopy.acceptanceState
+
+      newEnd = State(counter)
+      counter += 1
+
+      t1 = Transition(preEnd, start, 'ε')
+      t2 = Transition(preEnd, newEnd, 'ε')
+      t3 = Transition(end, start, 'ε')
+      t4 = Transition(end, newEnd, 'ε')
+
+      automaton = Automaton(
+        f"({a.expression})+",
+        a.alphabeat,
+        preStart,
+        newEnd,
+        a.states + aCopy.states + [newEnd],
+        a.transitions + aCopy.transitions + [t1, t2, t3, t4]
+      )
+
+      stack.append(automaton)
+
     else:
       a = State(counter)
       counter += 1
@@ -147,6 +177,6 @@ def AFN_from_RegEx(regexPostFix):
 #   print(item)
 
 regexTest = '(a|b)*abb'
-# regexTest = 'a*'
+# regexTest = 'a+'
 AFN_from_RegEx(infixToPostfix(regexTest))
 
