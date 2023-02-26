@@ -1,6 +1,4 @@
 import graphviz
-import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
 
 class State:
   def __init__(self, nodeLabel='', transitions=[]):
