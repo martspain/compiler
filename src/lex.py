@@ -2,6 +2,7 @@ from utils import infixToPostfix
 from automaton import Transition, State, Automaton
 
 operators = ['|', '.', '?', '+', '*', '^']
+epsilonChar = 'ε'
 
 # The entry must be postfix
 def AFN_from_RegEx(regexPostFix):
@@ -27,10 +28,10 @@ def AFN_from_RegEx(regexPostFix):
       newEnd = State(counter)
       counter += 1
 
-      t1 = Transition(newStart, start1, 'ε')
-      t2 = Transition(newStart, start2, 'ε')
-      t3 = Transition(end1, newEnd, 'ε')
-      t4 = Transition(end2, newEnd, 'ε')
+      t1 = Transition(newStart, start1, epsilonChar)
+      t2 = Transition(newStart, start2, epsilonChar)
+      t3 = Transition(end1, newEnd, epsilonChar)
+      t4 = Transition(end2, newEnd, epsilonChar)
 
       automaton = Automaton(
         f"({a.expression}|{b.expression})", # Expression
@@ -51,7 +52,7 @@ def AFN_from_RegEx(regexPostFix):
       aEndNode = a.acceptanceState
       bStartNode = b.initialState
 
-      t1 = Transition(aEndNode, bStartNode, 'ε')
+      t1 = Transition(aEndNode, bStartNode, epsilonChar)
 
       automaton = Automaton(
         a.expression + b.expression,
@@ -76,9 +77,9 @@ def AFN_from_RegEx(regexPostFix):
       newEnd = State(counter)
       counter += 1
 
-      t1 = Transition(newStart, start1, 'ε')
-      t2 = Transition(end1, newEnd, 'ε')
-      epsiTran = Transition(newStart, newEnd, 'ε')
+      t1 = Transition(newStart, start1, epsilonChar)
+      t2 = Transition(end1, newEnd, epsilonChar)
+      epsiTran = Transition(newStart, newEnd, epsilonChar)
 
       automaton = Automaton(
         f"({a.expression})?",
@@ -103,10 +104,10 @@ def AFN_from_RegEx(regexPostFix):
       newEnd = State(counter)
       counter += 1
 
-      t1 = Transition(newStart, start, 'ε')
-      t2 = Transition(newStart, newEnd, 'ε')
-      t3 = Transition(end, start, 'ε')
-      t4 = Transition(end, newEnd, 'ε')
+      t1 = Transition(newStart, start, epsilonChar)
+      t2 = Transition(newStart, newEnd, epsilonChar)
+      t3 = Transition(end, start, epsilonChar)
+      t4 = Transition(end, newEnd, epsilonChar)
 
       automaton = Automaton(
         f"({a.expression})*",
@@ -135,10 +136,10 @@ def AFN_from_RegEx(regexPostFix):
       newEnd = State(counter)
       counter += 1
 
-      t1 = Transition(preEnd, start, 'ε')
-      t2 = Transition(preEnd, newEnd, 'ε')
-      t3 = Transition(end, start, 'ε')
-      t4 = Transition(end, newEnd, 'ε')
+      t1 = Transition(preEnd, start, epsilonChar)
+      t2 = Transition(preEnd, newEnd, epsilonChar)
+      t3 = Transition(end, start, epsilonChar)
+      t4 = Transition(end, newEnd, epsilonChar)
 
       automaton = Automaton(
         f"({a.expression})+",
@@ -164,7 +165,7 @@ def AFN_from_RegEx(regexPostFix):
       stack.append(automaton)
 
   # showAFN(nodes, transitions)
-  print(f"expr: {stack[0].expression}")
+  # print(f"expr: {stack[0].expression}")
   stack[0].show()
 
 
@@ -176,7 +177,11 @@ def AFN_from_RegEx(regexPostFix):
 #       print(elem)
 #   print(item)
 
-regexTest = '(a|b)*abb'
+# regexTest = '(a|b)*abb'
 # regexTest = 'a+'
-AFN_from_RegEx(infixToPostfix(regexTest))
+# regexTest = '(x|t)+((a|m)?)+'
+
+# postfix = infixToPostfix(regexTest)
+# print('Postfix: ' + postfix)
+# AFN_from_RegEx(postfix)
 

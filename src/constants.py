@@ -1,3 +1,0 @@
-regExOperators = ['|', '?', '+', '*', '^']
-
-regExOperatorConstans = {'OR': '|'}

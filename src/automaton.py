@@ -46,8 +46,8 @@ class Automaton:
     # Return automaton copy and new iterator
     return Automaton(self.expression, self.alphabeat, stateMapping[self.initialState.label], stateMapping[self.acceptanceState.label], newStates, newTransitions), iterator
   
-  def show(self):
-    dot = graphviz.Digraph(comment=self.expression)
+  def show(self, graphComment=''):
+    dot = graphviz.Digraph(comment=graphComment if graphComment != '' else self.expression)
     dot.attr(label=self.expression, rankdir='LR', ranksep='1', nodesep='1')
     dot.engine='dot'
 
@@ -62,6 +62,6 @@ class Automaton:
 
     # Add initial state shape
     dot.node('', shape='point')
-    dot.edge('', self.initialState.label, constraint='false')
+    dot.edge('', self.initialState.label)
 
     dot.render(directory='nfa_output', view=True)

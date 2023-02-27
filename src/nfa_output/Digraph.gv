@@ -1,4 +1,4 @@
-// ab|*a.ab|.ab|.
+// ((a|b))*a(a|b)(a|b)
 digraph {
 	label="((a|b))*a(a|b)(a|b)" nodesep=1 rankdir=LR ranksep=1
 	1 [shape=circle]
