@@ -1,3 +1,5 @@
+from exceptions import *
+
 # Shunting yard algorithm and several functions to format a regular expression and parse it to postfix
 def getPrecedence(char):
   prec = 6
@@ -43,6 +45,12 @@ def formatRegEx(regex):
   return res
 
 def infixToPostfix(regex):
+  openingParenthesisCount = regex.count('(')
+  closingParenthesisCount = regex.count(')')
+
+  if openingParenthesisCount != closingParenthesisCount:
+    raise UnbanlancedParenthesis(regex, openingParenthesisCount, closingParenthesisCount)
+
   postfix = '' # Store the postfix result
   stack = []
   formattedRegEx = formatRegEx(regex)
